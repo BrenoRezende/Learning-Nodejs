@@ -1,11 +1,7 @@
-let express = require('express');
-let app = express();
+let app = require('./config/express'); 
 
-app.set('view engine', 'ejs');
-
-app.get('/', (req, res) => {
-    res.render('home/index');
-});
+let homeRoutes = require('./app/routes/home-routes')(app); 
+let productRoutes = require('./app/routes/product-routes')(app);
 
 let port = 3000;
 app.listen(port, () => {

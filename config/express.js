@@ -8,6 +8,7 @@ module.exports = () => {
 
     load('routes', {cwd: 'app'})
         .then('data')
+        .then('services')
         .into(app);
 
     return app;

@@ -17,6 +17,6 @@ module.exports = class GeocodeService {
                     return json.results[0].geometry.location;
                 return null;    
             })
-            .catch(err => err);
+            .catch(err => { throw new Error(err) });
     }
 }

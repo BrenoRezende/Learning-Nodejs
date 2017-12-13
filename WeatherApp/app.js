@@ -1,5 +1,5 @@
-const fetch = require('node-fetch');
 const yargs = require('yargs');
+const Geocode = require('./Services/GeocodeService');
 
 const argv = yargs.options({
         address: {
@@ -13,12 +13,15 @@ const argv = yargs.options({
     .alias('help', 'h')
     .argv;
 
-let address = encodeURIComponent(argv.address);
+let geocode = new Geocode();
 
-fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}`)
-    .then((res) => res.json())
-    .then(json => {
-        console.log('Latitude:', json.results[0].geometry.location.lat);
-        console.log('Longitude:', json.results[0].geometry.location.lng);
+geocode.getGeocode(argv.address)
+    .then(location => {
+        if (location) {
+            console.log(`Latitude: ${location.lat}`);
+            console.log(`Longitude: ${location.lng}`);
+        } else {
+            console.log('Unable to find that address.');
+        }
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log('Unable to connect to Google servers.'));

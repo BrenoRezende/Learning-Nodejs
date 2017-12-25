@@ -3,21 +3,22 @@ const hbs = require('hbs');
 
 let app = express();
 
+hbs.registerPartials(__dirname + '/views/shared');
+hbs.registerHelper('getCurrentYear', () => new Date().getFullYear());
+
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {
     res.render('home.hbs', {
         title: 'Home Page',
-        message: 'A sample text',
-        year: new Date().getFullYear()
+        message: 'A sample text'
     });
 });
 
 app.get('/about', (req, res) => {
     res.render('about.hbs', {
-        title: 'About Page',
-        year: new Date().getFullYear()
+        title: 'About Page'
     });
 });
 
